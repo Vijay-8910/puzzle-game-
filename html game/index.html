@@ -1,0 +1,176 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8"> -->
+      <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+      <title>Document</title>
+      <style>
+            *{margin: 0; padding: 0; box-sizing: border-box;}
+
+            header{
+                  width: 100%;
+                  line-height: 15vh;
+                  background-color: rgb(62, 100, 0);
+            }
+
+            h1 {
+                  text-align: center;
+                  font-size: 2.3rem;
+                  font-family: cursive;
+                  color: floralwhite;
+                  letter-spacing: 10px;
+                  text-shadow:  0 0 3px #FF0000, 0 0 5px #0000FF;;
+                  text-transform: uppercase;
+            }
+
+            section {
+                  height: 85vh;
+                  display: flex;
+                  justify-content: center;
+                  text-align: center;
+                  background-color:#74992e;
+                  }
+
+                  .gamezone{
+                  margin: auto;
+                  height: 500px;
+                  width:  50%;
+                  padding: 20px 0 ;
+                  flex-direction: column;
+                  display:flex;
+                  justify-content: center;
+                  align-items: center;
+                  background-color: rgb(62, 100, 0) ;
+                  }
+
+                  h3{
+                        text-align: center;
+                        font-size: 1.5rem;
+                  }
+
+                  input{
+                        padding: 15px 0;
+                        text-align: center;
+                        font-size: 1.5rem;
+                        border-radius: 25px;
+                        width: 50%;
+                        color: black;
+                        background-color: whitesmoke;
+                        outline: none;
+                        border: none;
+                        margin: 2rem;
+                  }
+
+                  button{
+                        font-size: 1.3rem;
+                        outline: none;
+                        cursor: pointer;
+                        border: rebeccapurple;
+                        text-decoration: none;
+                        margin-top:8px;
+                        color: springgreen;
+
+                  }
+
+                  button.btn{
+                        font-weight: 600;
+                        padding: 1rem 0.5rem;
+                        background: white;
+                        text-transform: uppercase;
+                        transition-property: all;
+                        transition-duration: 0.5s;
+                        transition-timing-function: cubic-bezier(0.65,-0.25,0.25,1.95);
+                  }
+
+                  button.btn:hover,button.btn:focus,button.btn:active{
+                        letter-spacing: 0.125rem;
+                        word-spacing: 0.6rem;
+                  }
+
+                  .hidden{
+                        display: none;
+                  }
+                  
+      </style>
+</head>
+<body>
+<header>
+      <h1>solve the puzzle </h1>
+</header>
+<section>
+      <div class="gamezone">
+            <h3 class="msg"></h3>
+            <input type="text" class="hidden">
+            <button class="btn">click here to start</button>            
+      </div>
+</section>
+
+<script>
+      const msg =document.querySelector('.msg');
+      const guess =document.querySelector('input');
+      const btn =document.querySelector('.btn');
+      let Newwords = "";
+      let randwords = "";
+       let play=false;
+       let Swords = ['python','javascript','adityadigant','arvind','sudhanshu shau','ashutosh','rupesh','connected','java','victory',
+       'pega','angular','android','reactjs','redmi','asus','samsung','sandesh','shalini','love','sunny','ajay','ankit',
+       ];
+
+       const CreateNewWords = () => {
+             let ranNum = Math.floor(Math.random() * Swords.length);
+            //  console.log(ranNum);
+             let NewTempWords = Swords[ranNum];
+            //  console.log(NewTempWords.split(" "));
+             return NewTempWords;
+       }
+             function scrambleWords(arr){
+                   for ( let i= arr.length-1 ; i>0; i--){
+                   let temp = arr[i];
+                   let j = Math.floor(Math.random()*(i+1));
+                  //    console.log (i);
+                  //    console.log (j);
+                  //    console.log(temp);
+
+                  arr[i] = arr[j]
+                  arr[j] = temp;
+                   }
+                 return arr;
+                  }
+            
+
+            
+
+       btn.addEventListener('click', function(){
+             if(!play){
+                   play = true;
+                   btn.innerHTML = "Solve";
+                   guess.classList.toggle('hidden');
+                   Newwords = CreateNewWords();
+                   randwords = scrambleWords(Newwords.split("")).join("");
+                  //  console.log(randwords);
+                   msg.innerHTML = `GUESS THE WORD : ${randwords}`;
+                   
+                  }else{
+                         let tempwords = guess.value;
+                         if (tempwords=== Newwords){
+                              //  console.log('correct');
+                               play = false;
+                               msg.innerHTML = `Awesome Bro It's Correct. It is ${Newwords}`;
+                               btn.innerHTML = "Start Again"; 
+                               guess.classList.toggle('hidden');
+                               guess.value = "";
+                         } else{
+                              //  console.log('incorrect');
+                               msg.innerHTML = `Sorry Bro It's incorrect. Plz try again. It is ${randwords}`;
+                         } 
+                  }
+
+
+       })
+
+
+</script>
+
+</body>
+</html>
